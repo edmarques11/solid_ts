@@ -1,4 +1,5 @@
 import Item from "./Item";
+import TaxItem from "./TaxItem";
 
 export default class Order {
     private items: Item[];
@@ -14,8 +15,10 @@ export default class Order {
     public getTaxes(): number {
         let taxes = 0;
 
-        this.items.forEach(item => {
-            taxes += item.calculateTax();
+        this.items.forEach((item) => {
+            if (item instanceof TaxItem) {
+                taxes += item.calculateTax();
+            }
         });
 
         return taxes;
@@ -23,7 +26,7 @@ export default class Order {
 
     public getTotal(): number {
         let total = 0;
-        this.items.forEach(item => {
+        this.items.forEach((item) => {
             total += item.getPrice();
         });
 

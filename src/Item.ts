@@ -9,12 +9,6 @@ export default abstract class Item {
         this.price = price;
     }
 
-    public calculateTax(): number {
-        return (this.getPrice() * this.getTax()) / 100;
-    }
-
-    abstract getTax(): number;
-
     public getCategory(): string {
         return this.category;
     }

@@ -1,11 +1,14 @@
+import MessageData from "./IMessageData";
 import Item from "./Item";
 import TaxItem from "./TaxItem";
 
 export default class Order {
     private items: Item[];
+    private messageData: MessageData;
 
-    constructor() {
+    constructor(messageData: MessageData) {
         this.items = [];
+        this.messageData = messageData;
     }
 
     public addItem(item: Item): void {
@@ -31,5 +34,12 @@ export default class Order {
         });
 
         return total;
+    }
+
+    public async printMessage(language: string): Promise<string> {
+        let message = await this.messageData.read(language)
+        return message
+            .replace(/\{total\}/, this.getTotal().toString())
+            .replace(/\{taxes\}/, this.getTaxes().toString());
     }
 }
